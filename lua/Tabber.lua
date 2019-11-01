@@ -1,13 +1,10 @@
 -- Data for a temp tab
 
-ghost = ghostTab.init({
-	["init"] = {},
-	["data"] = {},
-});
+ghost = nil;
 
 -- global variables
 
-currentTab 		= ghost;
+currentTab 		= nil;
 userTabs 		= nil;
 devMode 		= false;
 
@@ -19,13 +16,17 @@ devMode 		= false;
 function onInit()
 	registerMenuItem("New Tab", "insert", 5);
 
+	local tabberVersion = Extension.getExtensionInfo( "FGTabber" )["version"];
+
 	if CampaignRegistry["Tabber"] == nil then
 		CampaignRegistry["Tabber"] = {};
-		CampaignRegistry["Tabber"]["version"] = getExtensionInfo( "FGTabber" )["version"];
+		CampaignRegistry["Tabber"]["version"] = tabberVersion;
 	end
 
-	if getExtensionInfo( "FGTabber" )["version"] ~= CampaignRegistry["Tabber"]["version"] then
-		CampaignRegistry["Tabber"]["version"] = getExtensionInfo( "FGTabber" )["version"];
+	local registeredVersion = CampaignRegistry["Tabber"]["version"];
+
+	if tabberVersion ~= registeredVersion then
+		CampaignRegistry["Tabber"]["version"] = tabberVersion;
 		CampaignRegistry["Tabber"][User.getUsername()] = nil;
 	end
 
@@ -40,6 +41,13 @@ function onInit()
 	Interface.onDesktopClose = onDesktopClose
 	Interface.onWindowOpened = onWindowOpened
 	Interface.onWindowClosed = onWindowClosed
+
+	ghost = ghostTab.init({
+		["init"] = {},
+		["data"] = {}
+	});
+
+	currentTab = ghost;
 end
 
 -- Menu options
@@ -66,18 +74,18 @@ function loadTabs()
 	local num = nil;
 	local numOrder = {};
 
-	for name,value in pairs( userTabs ) do
-		num = tonumber( string.sub(name, 4) );
+	for tabName, data in pairs( userTabs ) do
+		num = tonumber( string.sub( tabName, 4 ) );
 		table.insert( numOrder, num );
 	end
 
 	table.sort(numOrder)
 
 	for i, order in ipairs( numOrder ) do
-		for name,value in pairs( userTabs ) do
-			if tonumber( string.sub( name, 4 ) ) == order then
-				tab = createControl( "tabbertab", name );
-				tab.load( value );
+		for tabName, data in pairs( userTabs ) do
+			if tonumber( string.sub( tabName, 4 ) ) == order then
+				tab = createControl( "tabbertab", tabName );
+				tab.load( data );
 			end
 		end
 	end
@@ -89,7 +97,12 @@ end
 
 function addTab()
 	tabs = getControls();
-	num = tonumber( string.sub(tabs[#tabs].getName(), 4) ) + 1;
+	
+	if tabs[1] then
+		num = tonumber( string.sub(tabs[#tabs].getName(), 4) ) + 1;
+	else
+		num = 1
+	end
 
 	newTab = createControl( "tabbertab", "TAB" .. num );
 	newTab.new( "New Tab " .. num );
@@ -111,7 +124,6 @@ function deleteTab( tab )
 end
 
 -- Switch tabs
--- TODO: if switched tab = current tab, return to the tempTab
 
 function switchTab( tab )
 	currentTab.loseFocus();
@@ -142,32 +154,23 @@ end
 -- If there is a tab open, and desktop closes, save the tab
 
 function onDesktopClose()
-	if currentTab then
-		currentTab.saveAllWindows()
-	end
+	currentTab.saveAllWindows();
 end
 
 -- When a window opens, and we have a tab selected, save the tab
 
 function onWindowOpened( window )
-	if currentTab then
-		currentTab.storeWindow( window )
-	end
+	currentTab.storeWindow( window );
 end
 
 -- When a window closes, and we have a tab selected, remove the tab
 
 function onWindowClosed( window )
-	if currentTab then
-		currentTab.removeWindow( window )
-	end
-
+	currentTab.removeWindow( window );
 end
 
 -- Pass captured data to the current tab
 
 function captureData( data )
-	if currentTab then
-		currentTab.captureData( data )
-	end
+	currentTab.captureData( data );
 end

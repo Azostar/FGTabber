@@ -18,10 +18,10 @@
 		<description> An extension for WSX. Adds tabs to FG that use the WSX functionality. </description>
 	</properties>
 	<base> 
+		<script name="ghostTab" file="lua/TabberGhost.lua" />
 		<includefile source="xml/tabber_classes.xml" />   
 		<includefile source="xml/template_tabber.xml" />   
 		<includefile source="xml/override/layout.xml" />
 		<includefile source="xml/override/PFRPG2.xml" />
-		<script name="ghostTab" file="lua/TabberGhost.lua" />
 	</base> 
 </root>
