@@ -14,13 +14,21 @@ tempTab = {
 };
 
 -- Init the campaign registry and register menu items.
+-- Check if we're running a different version to what data is stored, if so clear the data.
 -- Load tabs if the campaign registry information already exists
+-- Pass functions to the required handlers
 
 function onInit()
 	registerMenuItem("New Tab", "insert", 5);
 
 	if CampaignRegistry["Tabber"] == nil then
 		CampaignRegistry["Tabber"] = {};
+		CampaignRegistry["Tabber"]["version"] = getExtensionInfo( "FGTabber" )["version"];
+	end
+
+	if getExtensionInfo( "FGTabber" )["version"] ~= CampaignRegistry["Tabber"]["version"] then
+		CampaignRegistry["Tabber"]["version"] = getExtensionInfo( "FGTabber" )["version"];
+		CampaignRegistry["Tabber"][User.getUsername()] = nil;
 	end
 
 	if CampaignRegistry["Tabber"][User.getUsername()] == nil then
@@ -31,6 +39,10 @@ function onInit()
 		loadTabs();
 	end
 
+
+	Interface.onDesktopClose = onDesktopClose
+	Interface.onWindowOpened = onWindowOpened
+	Interface.onWindowClosed = onWindowClosed
 end
 
 -- Menu options
