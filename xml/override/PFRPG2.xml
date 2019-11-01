@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root>
+	<template name="button_item_armor">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="60">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="item_button_armor" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.armor");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.armor");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.armor");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "item", sListView = "armor" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_item_shields">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="65">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="item_button_shields" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.shield");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.shield");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.shield");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "item", sListView = "shield" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+	<template name="button_item_weapons">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="item_button_weapons" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.weapon");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.weapon");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.weapon");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "item", sListView = "weapon" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_item_gear">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="60">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="item_button_gear" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.gear");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.gear");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.gear");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "item", sListView = "gear" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_item_treasure">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="item_button_treasure" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.treasure");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.treasure");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.treasure");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "item", sListView = "treasure" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+	<template name="button_npc_letter">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="npc_button_letter" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.npcdatabyletter");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.npcdatabyletter");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.npcdatabyletter");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "npc", sListView = "byletter" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_npc_cr">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="npc_button_level" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.npcdatabycr");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.npcdatabycr");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.npcdatabycr");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "npc", sListView = "bycr" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_npc_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="npc_button_type" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.npcdatabytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.npcdatabytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.npcdatabytype");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "npc", sListView = "bytype" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_specialability_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="specialability_button_type" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.specialabilitiesbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.specialabilitiesbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.specialabilitiesbytype");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "specialability", sListView = "bytype" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<!--PFRPG 2.0 - not used?-->
+	<template name="button_feat_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="feat_button_type" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.featsbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.featsbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.featsbytype");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "feat", sListView = "bytype" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	
+	<template name="button_feat_trait">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="feat_button_trait" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.featsbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.featsbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.featsbytype");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "feat", sListView = "bytrait" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+
+	<template name="button_feat_general">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="feat_button_general" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.generalfeats");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.generalfeats");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.generalfeats");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "feat", sListView = "general" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+
+	<template name="button_background_list_bysource">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="background_button_byletter" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.backgrounds");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.backgrounds");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.backgrounds");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "background", sListView = "byletter" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>		
+
+	<template name="button_action_trait">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="feat_button_trait" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.actionsbytrait");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.actionsbytrait");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.actionsbytrait");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "action", sListView = "bytrait" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+
+	<template name="button_action_action">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="100">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="feat_button_actiontype" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.actionsbyaction");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.actionsbyaction");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.actionsbyaction");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "action", sListView = "byaction" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+	
+	<template name="button_spell_list_arcane">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="60">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="spell_button_arcanespelllist" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.arcanespells");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.arcanespells");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.arcanespells");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "spell", sListView = "arcanespelllist" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>		
+
+	<template name="button_spell_list_divine">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="50">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="spell_button_divinespelllist" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.divinespells");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.divinespells");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.divinespells");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "spell", sListView = "divinespelllist" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+
+	<template name="button_spell_list_occult">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="60">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="spell_button_occultspelllist" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.occultspells");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.occultspells");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.occultspells");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "spell", sListView = "occultspelllist" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+
+	<template name="button_spell_list_primal">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="60">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="spell_button_primalspelllist" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.primalspells");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.primalspells");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.primalspells");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "spell", sListView = "primalspelllist" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+	
+	<template name="button_focusspells_list">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="spell_button_focusspellslist" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.focusspells");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.focusspells");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.focusspells");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "spell", sListView = "focusspellslist" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+	
+	<template name="button_rituals_list">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="50">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="spell_button_ritualslist" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.rituals");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.rituals");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.rituals");
+						tabber = Interface.findWindow("Tabber", "");
+						w.init(tabber.captureData({ sRecordType = "spell", sListView = "ritualsslist" }));
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>	
+</root>

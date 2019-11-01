@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?> 
+<root> 
+
+	<panel name="Tabber"> 
+		<class>Tabber</class>
+		<anchored height="28">
+			<right/>
+			<top/>
+			<left/>
+		</anchored>
+	</panel>
+
+	<windowclass name="Tabber">
+		<margins control="15,0,15,0" />
+		<backcolor>#FF333333</backcolor>
+		<script file="lua/Tabber.lua" />
+	</windowclass>
+
+</root>

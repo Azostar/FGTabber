@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?> 
+<root> 
+	<template name="tabbertab">
+		<stringfield>
+				<margins />
+				<color> #FFCCCCCC </color>
+				<offset>
+						5,5,5,5
+				</offset>
+				<frame>
+					<offset>
+						5,5,5,5
+					</offset>
+				</frame>	
+
+				<anchored>
+					<left/>
+					<top/>
+					<bottom/>
+				</anchored>
+
+				<readonly/>
+
+				<script file="lua/TabberTab.lua" />
+		</stringfield>
+	</template>
+</root>
