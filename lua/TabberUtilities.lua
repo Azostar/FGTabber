@@ -98,6 +98,12 @@ function loadAllWindows( tabData )
 	opening = false;
 end
 
+-- set exiting to true
+
+function exiting()
+	closing = true
+end
+
 -- Capture data passed to a window when it is loaded. Requires manual overide of XML to get function data.
 
 function captureData( data, tabData )

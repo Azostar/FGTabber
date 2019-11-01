@@ -149,6 +149,7 @@ end
 
 function onDesktopClose()
 	currentTab.saveAllWindows();
+	tabUtil.exiting();
 end
 
 -- When a window opens, and we have a tab selected, save the tab
