@@ -1,7 +1,3 @@
--- Data for a temp tab
-
-ghost = nil;
-
 -- global variables
 
 currentTab 		= nil;
@@ -42,12 +38,11 @@ function onInit()
 	Interface.onWindowOpened = onWindowOpened
 	Interface.onWindowClosed = onWindowClosed
 
-	ghost = ghostTab.init({
+	ghostTab.init({
 		["init"] = {},
 		["data"] = {}
 	});
-
-	currentTab = ghost;
+	currentTab = ghostTab;
 end
 
 -- Menu options
@@ -115,7 +110,7 @@ end
 
 function deleteTab( tab )
 	if currentTab == tab then
-		switchTab( ghost )
+		switchTab( ghostTab )
 	end
 
 	tab.destroy()
@@ -129,8 +124,8 @@ function switchTab( tab )
 	currentTab.loseFocus();
 
 	if currentTab == tab then
-		ghost.gainFocus()
-		currentTab = ghost;
+		ghostTab.gainFocus()
+		currentTab = ghostTab;
 	else
 		tab.gainFocus();
 		currentTab = tab;

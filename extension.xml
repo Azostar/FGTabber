@@ -19,6 +19,7 @@
 	</properties>
 	<base> 
 		<script name="ghostTab" file="lua/TabberGhost.lua" />
+		<script name="tabUtil" file ="lua/TabberUtilities.lua" />
 		<includefile source="xml/tabber_classes.xml" />   
 		<includefile source="xml/template_tabber.xml" />   
 		<includefile source="xml/override/layout.xml" />
