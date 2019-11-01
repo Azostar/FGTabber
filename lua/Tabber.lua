@@ -92,7 +92,7 @@ end
 -- Add a new tab
 
 function addTab()
-	tabs = getControls();
+	local tabs = getControls();
 	
 	if tabs[1] then
 		num = tonumber( string.sub(tabs[#tabs].getName(), 4) ) + 1;
@@ -136,11 +136,11 @@ end
 -- Resets anchors of all child tabs to stack them left
 
 function resetAnchors()
-	controls = getControls()
+	local tabs = getControls()
 
-	for i, tab in ipairs(controls) do
+	for i, tab in ipairs( tabs ) do
 		if i > 1 then
-			tab.setAnchor("left", controls[i-1].getName(), "right", "absolute", 30);
+			tab.setAnchor( "left", tabs[i-1].getName(), "right", "absolute", 30 );
 		end
 	end
 end
