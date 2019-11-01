@@ -10,7 +10,7 @@
 		<anchored>
 			<left /> 
 			<top offset="28" />
-			<right />
+			<right parent="shortcuts" anchor="left"/>
 			<bottom offset="-33" />
 		</anchored>
 		<class>imagefullpanel</class>

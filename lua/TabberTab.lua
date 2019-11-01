@@ -172,7 +172,7 @@ function loadAllWindows()
 		window.setSize( data["size"]["width"], data["size"]["height"] );
 
 		if tabData["init"][windowName] then
-			window.init( userTabs[tab.getName()]["init"][name] );
+			window.init( tabData["init"][name] );
 		end
 
 	end

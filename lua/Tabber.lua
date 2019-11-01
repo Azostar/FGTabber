@@ -1,17 +1,15 @@
--- global variables
-
-currentTab 		= nil;
-userTabs 		= nil;
-devMode 		= false;
-
 -- Data for a temp tab
--- TODO: Make use of this tempTab skeleton
 
-tempTab = {
+ghost = ghostTab.init({
 	["init"] = {},
 	["data"] = {},
-	["text"] = ""
-};
+});
+
+-- global variables
+
+currentTab 		= ghost;
+userTabs 		= nil;
+devMode 		= false;
 
 -- Init the campaign registry and register menu items.
 -- Check if we're running a different version to what data is stored, if so clear the data.
@@ -38,7 +36,6 @@ function onInit()
 		userTabs = CampaignRegistry["Tabber"][User.getUsername()];
 		loadTabs();
 	end
-
 
 	Interface.onDesktopClose = onDesktopClose
 	Interface.onWindowOpened = onWindowOpened
@@ -97,20 +94,19 @@ function addTab()
 	newTab = createControl( "tabbertab", "TAB" .. num );
 	newTab.new( "New Tab " .. num );
 
+	switchTab( newTab )
 	resetAnchors();
 end
 
 -- Delete passed tab
 
 function deleteTab( tab )
-	tab.closeAllWindows()
-	tab.destroy()
-	userTabs[tab.getName()] = nil
-
 	if currentTab == tab then
-		currentTab = nil
+		switchTab( ghost )
 	end
 
+	tab.destroy()
+	userTabs[tab.getName()] = nil
 	resetAnchors()
 end
 
@@ -118,11 +114,15 @@ end
 -- TODO: if switched tab = current tab, return to the tempTab
 
 function switchTab( tab )
-	if currentTab then
-		currentTab.loseFocus();
+	currentTab.loseFocus();
+
+	if currentTab == tab then
+		ghost.gainFocus()
+		currentTab = ghost;
+	else
+		tab.gainFocus();
+		currentTab = tab;
 	end
-	tab.gainFocus();
-	currentTab = tab;
 end
 
 -- Resets anchors of all child tabs to stack them left
@@ -162,4 +162,12 @@ function onWindowClosed( window )
 		currentTab.removeWindow( window )
 	end
 
+end
+
+-- Pass captured data to the current tab
+
+function captureData( data )
+	if currentTab then
+		currentTab.captureData( data )
+	end
 end
