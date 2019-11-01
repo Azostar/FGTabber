@@ -1,5 +1,6 @@
 closing 		= false;
 opening 		= false;
+recentWindow 	= nil;
 
 -- Get node path of passed window
 
@@ -18,7 +19,7 @@ end
 function storeWindow( window, tabData )
 	if not opening then
 		local class = window.getClass();
-		local node = tabberUtil.getNodePath( window );
+		local node = getNodePath( window );
 		local x,y = window.getPosition();
 		local w,h = window.getSize();
 
@@ -49,7 +50,7 @@ end
 function removeWindow( window, tabData )
 	if not closing then
 		local class = window.getClass();
-		local node = tabberUtil.getNodePath( window );
+		local node = getNodePath( window );
 		local windowName = class .. node;
 
 		tabData["data"][windowName] = nil;
@@ -62,7 +63,7 @@ end
 function saveAllWindows( tabData )
 	for windowName, data in pairs( tabData["data"] ) do
 		window = Interface.findWindow( data["class"], data["node"] );
-		storeWindow( window );
+		storeWindow( window, tabData );
 	end
 end
 
@@ -89,10 +90,17 @@ function loadAllWindows( tabData )
 		window.setSize( data["size"]["width"], data["size"]["height"] );
 
 		if tabData["init"][windowName] then
-			window.init( tabData["init"][name] );
+			window.init( tabData["init"][windowName] );
 		end
 
 	end
 
 	opening = false;
+end
+
+-- Capture data passed to a window when it is loaded. Requires manual overide of XML to get function data.
+
+function captureData( data, tabData )
+	tabData["init"][recentWindow] = data;
+	return data;
 end

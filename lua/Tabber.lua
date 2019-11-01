@@ -42,6 +42,7 @@ function onInit()
 		["init"] = {},
 		["data"] = {}
 	});
+
 	currentTab = ghostTab;
 end
 
@@ -100,7 +101,7 @@ function addTab()
 	end
 
 	newTab = createControl( "tabbertab", "TAB" .. num );
-	newTab.new( "New Tab " .. num );
+	newTab.new( "New Tab " .. num, userTabs );
 
 	switchTab( newTab )
 	resetAnchors();
@@ -138,9 +139,7 @@ function resetAnchors()
 	controls = getControls()
 
 	for i, tab in ipairs(controls) do
-		if i == 1 then
-			tab.setAnchor("left", getName(), "left", "absolute", 20);
-		else
+		if i > 1 then
 			tab.setAnchor("left", controls[i-1].getName(), "right", "absolute", 30);
 		end
 	end
@@ -167,5 +166,5 @@ end
 -- Pass captured data to the current tab
 
 function captureData( data )
-	currentTab.captureData( data );
+	return currentTab.captureData( data );
 end

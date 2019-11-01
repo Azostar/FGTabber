@@ -6,7 +6,6 @@
 -- Global variables
 
 tabData 		= nil;
-recentWindow 	= nil;
 
 -- Initialise the ghostData
 
@@ -30,36 +29,35 @@ end
 -- Store window data inside of the tabData
 
 function storeWindow( window )
-	tabberUtil.storeWindow( window, tabData );
+	tabUtil.storeWindow( window, tabData );
 end
 
 -- Remove a window from the tabData
 
 function removeWindow( window )
-	tabberUtil.removeWindow( window, tabData );
+	tabUtil.removeWindow( window, tabData );
 end
 
 -- Save all windows to the tabData
 
 function saveAllWindows()
-	tabberUtil.saveAllWindows( tabData );
+	tabUtil.saveAllWindows( tabData );
 end
 
 -- Close all windows currently open
 
 function closeAllWindows()
-	tabberUtil.closeAllWindows( tabData );
+	tabUtil.closeAllWindows( tabData );
 end
 
 -- Load all the windows contained inside the dataData
 
 function loadAllWindows()
-	tabberUtil.loadAllWindows( tabData );
+	tabUtil.loadAllWindows( tabData );
 end
 
 -- Capture data passed to a window when it is loaded. Requires manual overide of XML to get function data.
 
 function captureData( data )
-	tabData["init"][recentWindow] = data;
-	return data;
+	return tabUtil.captureData( data, tabData );
 end
