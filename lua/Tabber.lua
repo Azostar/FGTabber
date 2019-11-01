@@ -131,7 +131,7 @@ function resetAnchors()
 	controls = getControls()
 
 	for i, tab in ipairs(controls) do
-		if i = 1 then
+		if i == 1 then
 			tab.setAnchor("left", getName(), "left", "absolute", 20);
 		else
 			tab.setAnchor("left", controls[i-1].getName(), "right", "absolute", 30);
