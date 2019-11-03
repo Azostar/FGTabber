@@ -1,3 +1,5 @@
+-- Globals
+
 closing 		= false;
 opening 		= false;
 recentWindow 	= nil;
@@ -63,7 +65,12 @@ end
 function saveAllWindows( tabData )
 	for windowName, data in pairs( tabData["data"] ) do
 		window = Interface.findWindow( data["class"], data["node"] );
-		storeWindow( window, tabData );
+		
+		if window then
+			storeWindow( window, tabData );
+		else
+			clearTabEntry( windowName, tabData);
+		end
 	end
 end
 
@@ -73,7 +80,13 @@ function closeAllWindows( tabData )
 	closing = true;
 
 	for windowName, data in pairs( tabData["data"] ) do
-		Interface.findWindow( data["class"], data["node"] ).close();
+		window = Interface.findWindow( data["class"], data["node"] );
+
+		if window then
+			window.close();
+		else
+			clearTabEntry( windowName, tabData );
+		end
 	end
 
 	closing = false;
@@ -86,13 +99,17 @@ function loadAllWindows( tabData )
 
 	for windowName, data in pairs( tabData["data"] ) do
 		window = Interface.openWindow( data["class"], data["node"] );
-		window.setPosition( data["position"]["x"], data["position"]["y"], true );
-		window.setSize( data["size"]["width"], data["size"]["height"] );
 
-		if tabData["init"][windowName] then
-			window.init( tabData["init"][windowName] );
+		if window then
+			window.setPosition( data["position"]["x"], data["position"]["y"], true );
+			window.setSize( data["size"]["width"], data["size"]["height"] );
+
+			if tabData["init"][windowName] then
+				window.init( tabData["init"][windowName] );
+			end
+		else
+			clearTabEntry( windowName, tabData );
 		end
-
 	end
 
 	opening = false;
@@ -102,6 +119,11 @@ end
 
 function exiting()
 	closing = true
+end
+
+function clearTabEntry( windowName, tabData)
+	tabData["data"][windowName] = nil;
+	tabData["init"][windowName] = nil;
 end
 
 -- Capture data passed to a window when it is loaded. Requires manual overide of XML to get function data.
