@@ -65,7 +65,7 @@ end
 function saveAllWindows( tabData )
 	for windowName, data in pairs( tabData["data"] ) do
 		window = Interface.findWindow( data["class"], data["node"] );
-		
+
 		if window then
 			storeWindow( window, tabData );
 		else
@@ -115,11 +115,13 @@ function loadAllWindows( tabData )
 	opening = false;
 end
 
--- set exiting to true
+-- Set exiting to true
 
 function exiting()
 	closing = true
 end
+
+-- Clears the tab entry for the given window name in the tab data
 
 function clearTabEntry( windowName, tabData)
 	tabData["data"][windowName] = nil;

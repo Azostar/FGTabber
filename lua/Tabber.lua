@@ -114,8 +114,8 @@ function deleteTab( tab )
 		switchTab( ghostTab )
 	end
 
-	tab.destroy()
 	userTabs[tab.getName()] = nil
+	tab.destroy()
 	resetAnchors()
 end
 
