@@ -81,10 +81,10 @@ end
 
 function addTab()
 	local tabs = getControls();
-	local name = math.random();
+	local name = "t" .. string.sub( tostring( math.random() ), 11 );
 
 	while( userTabs[name] ) do
-		name = math.random();
+		name = "t" .. string.sub( tostring( math.random() ), 11 );
 	end
 	
 	newTab = createControl( "tabbertab", name );
