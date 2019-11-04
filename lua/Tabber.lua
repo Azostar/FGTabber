@@ -155,7 +155,6 @@ function reloadTabs()
 
 	if currentTab ~= ghostTab then
 		reset = currentTab.getName();
-		currentTab.loseFocus();
 	end
 
 	for i, tab in ipairs( tabs ) do
@@ -170,7 +169,7 @@ function reloadTabs()
 		for i, tab in ipairs( tabs ) do
 			if tab.getName() == reset then
 				currentTab = tab;
-				currentTab.gainFocus();
+				currentTab.setBGSelected();
 			end
 		end
 	end

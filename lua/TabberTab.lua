@@ -118,9 +118,7 @@ end
 
 function gainFocus()
 	loadAllWindows();
-	setBackColor( "#FF222222" );
-	setColor("#FFDDDDDD");
-	focus = true;
+	setBGSelected();
 end
 
 -- Lose focus by saving all current windows and closing them, setting colour to original state
@@ -128,6 +126,16 @@ end
 function loseFocus()
 	saveAllWindows();
 	closeAllWindows();
+	setBGUnselected();
+end
+
+function setBGSelected()
+	setBackColor( "#FF222222" );
+	setColor("#FFDDDDDD");
+	focus = true;
+end
+
+function setBGUnselected()
 	setBackColor( "#FF333333" );
 	setColor("#FFCCCCCC");
 	focus = false;
