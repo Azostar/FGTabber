@@ -123,7 +123,7 @@ end
 
 -- Clears the tab entry for the given window name in the tab data
 
-function clearTabEntry( windowName, tabData)
+function clearTabEntry( windowName, tabData )
 	tabData["data"][windowName] = nil;
 	tabData["init"][windowName] = nil;
 end

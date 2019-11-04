@@ -7,9 +7,9 @@ userTabs 		= nil;
 -- Check if we're running a different version to what data is stored, if so clear the data.
 -- Load tabs if the campaign registry information already exists
 -- Pass functions to the required handlers
-function reset()
+function reset( version )
 	CampaignRegistry["Tabber"] = {};
-	CampaignRegistry["Tabber"]["version"] = tabberVersion;
+	CampaignRegistry["Tabber"]["version"] = version;
 	CampaignRegistry["Tabber"]["hotkeys"] = {};
 end
 
@@ -19,13 +19,13 @@ function onInit()
 	local tabberVersion = Extension.getExtensionInfo( "FGTabber" )["version"];
 
 	if CampaignRegistry["Tabber"] == nil then
-		reset();
+		reset( tabberVersion );
 	end
 
 	local registeredVersion = CampaignRegistry["Tabber"]["version"];
 
 	if tabberVersion ~= registeredVersion then
-		reset();
+		reset( tabberVersion );
 	end
 
 	if CampaignRegistry["Tabber"][User.getUsername()] == nil then
@@ -36,11 +36,11 @@ function onInit()
 		loadTabs();
 	end
 
-	Interface.onDesktopClose = onDesktopClose
-	Interface.onWindowOpened = onWindowOpened
-	Interface.onWindowClosed = onWindowClosed
+	Interface.onDesktopClose 	= onDesktopClose
+	Interface.onWindowOpened 	= onWindowOpened
+	Interface.onWindowClosed 	= onWindowClosed
 	Interface.onHotkeyActivated = onHotkeyActivated
-	Interface.onHotkeyDrop = onHotkeyDrop
+	Interface.onHotkeyDrop 		= onHotkeyDrop
 
 	ghostTab.init({
 		["init"] = {},
@@ -204,15 +204,20 @@ end
 
 function onHotkeyActivated( dragdata )
 	if dragdata.getType() == "tabbertab" then
-		regData = CampaignRegistry["Tabber"]["hotkeys"][dragdata.getStringData()];
+		local tabName = dragdata.getStringData();
+		local regData = CampaignRegistry["Tabber"]["hotkeys"][tabName];
 
 		if regData then
-			text = userTabs[dragdata.getStringData()]["text"];
-			CampaignRegistry["Tabber"]["hotkeys"][dragdata.getStringData()] = text;
-			dragdata.setDescription( text );
-			switchTab( dragdata.getStringData() );
-		else
-			dragdata.reset();
+			local tabs = getControls();
+			local swTab = nil;
+
+			for i, tab in ipairs( tabs ) do
+				if tab.getName() == tabName then
+					swTab = tab;
+				end
+			end
+
+			switchTab( swTab );
 		end
 	end
 end

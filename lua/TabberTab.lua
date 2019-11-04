@@ -57,8 +57,7 @@ end
 -- On drag
 
 function onDragStart( button, x, y, dragdata )
-	dragdata.createBaseData();
-	dragdata.setType( "taborder" );
+	dragdata.setType( "tabbertab" );
 	dragdata.setNumberData( tabData["order"] );
 	dragdata.setStringData( getName() );
 	dragdata.setDescription( tabData["text"] );
@@ -68,7 +67,7 @@ end
 -- On drop
 
 function onDrop( x, y, dragdata )
-	if dragdata.getType() == "taborder" then
+	if dragdata.getType() == "tabbertab" then
 		tabber.changeOrder( 
 			getName(), 
 			tabData["order"], 
