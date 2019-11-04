@@ -2,7 +2,6 @@
 
 currentTab 		= nil;
 userTabs 		= nil;
-devMode 		= false;
 
 -- Init the campaign registry and register menu items.
 -- Check if we're running a different version to what data is stored, if so clear the data.
@@ -49,17 +48,8 @@ end
 -- Menu options
 
 function onMenuSelection( selection )
-	-- Add Tab
 	if selection == 5 then
 		addTab();
-	end
-end
-
--- Send toggled message to console
-
-function devMessage( message )
-	if devMode then
-		Debug.console( "Tabber - " .. message )
 	end
 end
 
@@ -67,62 +57,78 @@ end
 -- TODO: add custom ordering a drag & drop ordering
 
 function loadTabs()
-	local num = nil;
-	local numOrder = {};
+	local order = {};
 
 	for tabName, data in pairs( userTabs ) do
-		num = tonumber( string.sub( tabName, 4 ) );
-		table.insert( numOrder, num );
+		order[ data["order"] ] = tabName;
 	end
 
-	table.sort(numOrder)
-
-	for i, order in ipairs( numOrder ) do
+	for i, name in ipairs( order ) do
 		for tabName, data in pairs( userTabs ) do
-			if tonumber( string.sub( tabName, 4 ) ) == order then
+			if tabName == name then
 				tab = createControl( "tabbertab", tabName );
 				tab.load( data );
+
+				if i > 1 then
+					tab.setAnchor( "left", order[i - 1], "right", "absolute", 30 );
+				end
 			end
 		end
 	end
-
-	resetAnchors();
 end
 
 -- Add a new tab
 
 function addTab()
 	local tabs = getControls();
+	local name = math.random();
+
+	while( userTabs[name] ) do
+		name = math.random();
+	end
 	
+	newTab = createControl( "tabbertab", name );
+	newTab.new( "New Tab", userTabs, #tabs + 1 );
+
 	if tabs[1] then
-		num = tonumber( string.sub(tabs[#tabs].getName(), 4) ) + 1;
-	else
-		num = 1
+		local lastTab = tabs[#tabs];
+		newTab.setAnchor( "left", lastTab.getName(), "right", "absolute", 30 )
 	end
 
-	newTab = createControl( "tabbertab", "TAB" .. num );
-	newTab.new( "New Tab " .. num, userTabs );
-
-	switchTab( newTab )
-	resetAnchors();
+	switchTab( newTab );
 end
 
 -- Delete passed tab
 
 function deleteTab( tab )
-	if currentTab == tab then
-		switchTab( ghostTab )
+	local order = {};
+
+	for tabName, data in pairs( userTabs ) do
+		order[ data["order"] ] = tabName;
 	end
 
-	userTabs[tab.getName()] = nil
-	tab.destroy()
-	resetAnchors()
+	for i, name in ipairs( order ) do
+		if i >= userTabs[tab.getName()]["order"] then
+			current = userTabs[name]["order"];
+			userTabs[name]["order"] = current - 1;
+		end
+	end
+
+	userTabs[tab.getName()] = nil;
+
+	if currentTab == tab then
+		switchTab( ghostTab );
+	end
+
+	reloadTabs();
 end
 
 -- Switch tabs
 
 function switchTab( tab )
-	currentTab.loseFocus();
+	if currentTab then
+		currentTab.loseFocus();
+	end
 
 	if currentTab == tab then
 		ghostTab.gainFocus()
@@ -133,14 +139,39 @@ function switchTab( tab )
 	end
 end
 
--- Resets anchors of all child tabs to stack them left
+-- Swap two tabs
 
-function resetAnchors()
-	local tabs = getControls()
+function changeOrder( tab1, order1, tab2, order2 )
+	userTabs[tab1]["order"] = order2;
+	userTabs[tab2]["order"] = order1;
+	reloadTabs();
+end
+
+-- Reloads all the tabs onto the bar.
+
+function reloadTabs()
+	local tabs = getControls();
+	local reset = nil;
+
+	if currentTab ~= ghostTab then
+		reset = currentTab.getName();
+		currentTab.loseFocus();
+	end
 
 	for i, tab in ipairs( tabs ) do
-		if i > 1 then
-			tab.setAnchor( "left", tabs[i-1].getName(), "right", "absolute", 30 );
+		tab.destroy();
+	end
+
+	loadTabs();
+
+	if reset then
+		tabs = getControls();
+
+		for i, tab in ipairs( tabs ) do
+			if tab.getName() == reset then
+				currentTab = tab;
+				currentTab.gainFocus();
+			end
 		end
 	end
 end

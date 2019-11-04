@@ -1,6 +1,7 @@
 -- Globals
 
 tabData 		= nil;
+focus 			= false;
 
 -- Register menu items
 
@@ -38,11 +39,41 @@ function onLoseFocus()
 	saveValue();
 end
 
--- When tab is clicked, tell tabber we want to change to this tab
+-- To get to the onClickRelease function
 
 function onClickDown( button, x, y )
+	return true;
+end
+
+-- When tab is clicked, tell tabber we want to change to this tab
+
+function onClickRelease( button, x, y )
 	if button == 1 then
 		Interface.findWindow("Tabber", "").switchTab( self );
+	end
+end
+
+-- On drag
+
+function onDragStart( button, x, y, dragdata )
+	dragdata.createBaseData();
+	dragdata.setType( "taborder" );
+	dragdata.setNumberData( tabData["order"] );
+	dragdata.setStringData( getName() );
+	dragdata.setDescription( tabData["text"] );
+	return true;
+end
+
+-- On drop
+
+function onDrop( x, y, dragdata )
+	if dragdata.getType() == "taborder" then
+		Interface.findWindow("Tabber", "").changeOrder( 
+			getName(), 
+			tabData["order"], 
+			dragdata.getStringData(), 
+			dragdata.getNumberData() 
+			);
 	end
 end
 
@@ -55,12 +86,13 @@ end
 
 -- Set up the tabData variable as needed
 
-function new( text, data )
+function new( text, data, order )
 	data[getName()] = {}
 
 	tabData = data[getName()];
 	tabData["init"] = {};
 	tabData["data"] = {};
+	tabData["order"] = order;
 	tabData["text"] = text;
 	setValue( text );
 end
@@ -83,8 +115,9 @@ end
 
 function gainFocus()
 	loadAllWindows();
-	setBackColor("#FF222222");
+	setBackColor( "#FF222222" );
 	setColor("#FFDDDDDD");
+	focus = true;
 end
 
 -- Lose focus by saving all current windows and closing them, setting colour to original state
@@ -92,8 +125,21 @@ end
 function loseFocus()
 	saveAllWindows();
 	closeAllWindows();
-	setBackColor("#FF333333");
+	setBackColor( "#FF333333" );
 	setColor("#FFCCCCCC");
+	focus = false;
+end
+
+-- On tab hover
+
+function onHover( state )
+	if not focus then
+		if state then
+			setBackColor("#FF2B2B2B");
+		else
+			setBackColor("#FF333333");
+		end
+	end
 end
 
 -- Store window data inside of the tabData

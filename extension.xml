@@ -10,10 +10,10 @@
   			Aaron S. Dunford
 -->
 <root release="3.0" version="3">
-	<announcement text="FGTabber v0.5.6 by Aaron S. Dunford" font="emotefont" />
+	<announcement text="FGTabber v0.5.7 by Aaron S. Dunford" font="emotefont" />
 	<properties> 
 		<name>FGTabber</name> 
-		<version>0.5.6</version> 
+		<version>0.5.7</version> 
 		<author>Aaron S. Dunford</author> 
 		<description> An extension for WSX. Adds tabs to FG that use the WSX functionality. </description>
 	</properties>
