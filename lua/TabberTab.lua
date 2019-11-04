@@ -1,6 +1,7 @@
 -- Globals
 
 tabData 		= nil;
+tabber 			= nil;
 focus 			= false;
 
 -- Register menu items
@@ -19,7 +20,7 @@ function onMenuSelection( selection )
 		setFocus( true );
 	end
 	if selection == 4 then
-		Interface.findWindow("Tabber", "").deleteTab( self );
+		tabber.deleteTab( self );
 	end
 end
 
@@ -49,7 +50,7 @@ end
 
 function onClickRelease( button, x, y )
 	if button == 1 then
-		Interface.findWindow("Tabber", "").switchTab( self );
+		tabber.switchTab( self );
 	end
 end
 
@@ -68,7 +69,7 @@ end
 
 function onDrop( x, y, dragdata )
 	if dragdata.getType() == "taborder" then
-		Interface.findWindow("Tabber", "").changeOrder( 
+		tabber.changeOrder( 
 			getName(), 
 			tabData["order"], 
 			dragdata.getStringData(), 
@@ -79,14 +80,16 @@ end
 
 -- Load the data passed to the tab into the tabData variable
 
-function load( data )
+function load( data, parent )
+	tabber = parent;
 	tabData = data;
 	setValue( tabData["text"] )
 end
 
 -- Set up the tabData variable as needed
 
-function new( text, data, order )
+function new( text, data, order, parent )
+	tabber = parent;
 	data[getName()] = {}
 
 	tabData = data[getName()];

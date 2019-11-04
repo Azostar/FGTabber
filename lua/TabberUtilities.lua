@@ -7,7 +7,7 @@ recentWindow 	= nil;
 -- Get node path of passed window
 
 function getNodePath( window )
-	node = window.getDatabaseNode();
+	local node = window.getDatabaseNode();
 
 	if node then
 		return window.getDatabaseNode().getPath();
@@ -64,7 +64,7 @@ end
 
 function saveAllWindows( tabData )
 	for windowName, data in pairs( tabData["data"] ) do
-		window = Interface.findWindow( data["class"], data["node"] );
+		local window = Interface.findWindow( data["class"], data["node"] );
 
 		if window then
 			storeWindow( window, tabData );
@@ -80,7 +80,7 @@ function closeAllWindows( tabData )
 	closing = true;
 
 	for windowName, data in pairs( tabData["data"] ) do
-		window = Interface.findWindow( data["class"], data["node"] );
+		local window = Interface.findWindow( data["class"], data["node"] );
 
 		if window then
 			window.close();
@@ -98,7 +98,7 @@ function loadAllWindows( tabData )
 	opening = true;
 
 	for windowName, data in pairs( tabData["data"] ) do
-		window = Interface.openWindow( data["class"], data["node"] );
+		local window = Interface.openWindow( data["class"], data["node"] );
 
 		if window then
 			window.setPosition( data["position"]["x"], data["position"]["y"], true );

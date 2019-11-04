@@ -67,7 +67,7 @@ function loadTabs()
 		for tabName, data in pairs( userTabs ) do
 			if tabName == name then
 				tab = createControl( "tabbertab", tabName );
-				tab.load( data );
+				tab.load( data, self );
 
 				if i > 1 then
 					tab.setAnchor( "left", order[i - 1], "right", "absolute", 30 );
@@ -88,7 +88,7 @@ function addTab()
 	end
 	
 	newTab = createControl( "tabbertab", name );
-	newTab.new( "New Tab", userTabs, #tabs + 1 );
+	newTab.new( "New Tab", userTabs, #tabs + 1, self );
 
 	if tabs[1] then
 		local lastTab = tabs[#tabs];
