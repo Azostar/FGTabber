@@ -129,11 +129,15 @@ function loseFocus()
 	setBGUnselected();
 end
 
+-- Set BG
+
 function setBGSelected()
 	setBackColor( "#FF222222" );
 	setColor("#FFDDDDDD");
 	focus = true;
 end
+
+-- Reset BG
 
 function setBGUnselected()
 	setBackColor( "#FF333333" );

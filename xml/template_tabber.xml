@@ -19,6 +19,10 @@
 					<bottom/>
 				</anchored>
 
+				<droptypes > 
+					<type>tabbertab</type>
+ 				</droptypes> 
+
 				<readonly/>
 
 				<script file="lua/TabberTab.lua" />

@@ -7,6 +7,11 @@ userTabs 		= nil;
 -- Check if we're running a different version to what data is stored, if so clear the data.
 -- Load tabs if the campaign registry information already exists
 -- Pass functions to the required handlers
+function reset()
+	CampaignRegistry["Tabber"] = {};
+	CampaignRegistry["Tabber"]["version"] = tabberVersion;
+	CampaignRegistry["Tabber"]["hotkeys"] = {};
+end
 
 function onInit()
 	registerMenuItem("New Tab", "insert", 5);
@@ -14,15 +19,13 @@ function onInit()
 	local tabberVersion = Extension.getExtensionInfo( "FGTabber" )["version"];
 
 	if CampaignRegistry["Tabber"] == nil then
-		CampaignRegistry["Tabber"] = {};
-		CampaignRegistry["Tabber"]["version"] = tabberVersion;
+		reset();
 	end
 
 	local registeredVersion = CampaignRegistry["Tabber"]["version"];
 
 	if tabberVersion ~= registeredVersion then
-		CampaignRegistry["Tabber"]["version"] = tabberVersion;
-		CampaignRegistry["Tabber"][User.getUsername()] = nil;
+		reset();
 	end
 
 	if CampaignRegistry["Tabber"][User.getUsername()] == nil then
@@ -36,6 +39,8 @@ function onInit()
 	Interface.onDesktopClose = onDesktopClose
 	Interface.onWindowOpened = onWindowOpened
 	Interface.onWindowClosed = onWindowClosed
+	Interface.onHotkeyActivated = onHotkeyActivated
+	Interface.onHotkeyDrop = onHotkeyDrop
 
 	ghostTab.init({
 		["init"] = {},
@@ -115,6 +120,7 @@ function deleteTab( tab )
 	end
 
 	userTabs[tab.getName()] = nil;
+	CampaignRegistry["Tabber"]["hotkeys"][tab.getName()] = nil;
 
 	if currentTab == tab then
 		switchTab( ghostTab );
@@ -192,6 +198,31 @@ end
 
 function onWindowClosed( window )
 	currentTab.removeWindow( window );
+end
+
+-- When a hotkey is activated, check if it's a taborder datatype, and process it
+
+function onHotkeyActivated( dragdata )
+	if dragdata.getType() == "tabbertab" then
+		regData = CampaignRegistry["Tabber"]["hotkeys"][dragdata.getStringData()];
+
+		if regData then
+			text = userTabs[dragdata.getStringData()]["text"];
+			CampaignRegistry["Tabber"]["hotkeys"][dragdata.getStringData()] = text;
+			dragdata.setDescription( text );
+			switchTab( dragdata.getStringData() );
+		else
+			dragdata.reset();
+		end
+	end
+end
+
+-- When a hotkey is dropped into a bar
+
+function onHotkeyDrop( dragdata )
+	if dragdata.getType() == "tabbertab" then
+		CampaignRegistry["Tabber"]["hotkeys"][dragdata.getStringData()] = dragdata.getDescription();
+	end
 end
 
 -- Pass captured data to the current tab
