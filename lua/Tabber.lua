@@ -16,7 +16,7 @@ end
 function onInit()
 	registerMenuItem("New Tab", "insert", 5);
 
-	local tabberVersion = Extension.getExtensionInfo( "FGTabber" )["version"];
+	local tabberVersion = "v0.6.6";
 
 	if CampaignRegistry["Tabber"] == nil then
 		reset( tabberVersion );
